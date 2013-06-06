@@ -49,7 +49,8 @@ namespace Alienlab.Tools.FSFiddler2
     public delegate void MyDelegate();
     private void Append(string message)
     {
-      var d = new MyDelegate(() => this.lbResults.Items.Insert(0, string.Format("{0}\t{1}", DateTime.Now.ToString(CultureInfo.InvariantCulture), message)));
+      message = string.Format("{0}\t{1}", DateTime.Now.ToString(CultureInfo.InvariantCulture), message);
+      var d = new MyDelegate(() => this.lbResults.Items.Insert(0, message));
       if (this.lbResults.InvokeRequired)
       {
         this.lbResults.Invoke(d);
@@ -58,6 +59,7 @@ namespace Alienlab.Tools.FSFiddler2
       {
         d();
       }
+      File.AppendAllText("FSFiddler2.log", message + Environment.NewLine);
     }
 
     void FileSystemWatcherChanged(object sender, FileSystemEventArgs e)
