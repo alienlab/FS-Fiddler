@@ -64,7 +64,10 @@ namespace Alienlab.Tools.FSFiddler2
 
     void FileSystemWatcherChanged(object sender, FileSystemEventArgs e)
     {
-      Append(e.ChangeType.ToString() + "\t\t" + e.FullPath);
+      if (!string.IsNullOrEmpty(e.FullPath) && !Path.GetFileName(e.FullPath).Equals("FSFiddler2.log", StringComparison.OrdinalIgnoreCase))
+      {
+        Append(e.ChangeType.ToString() + "\t\t" + e.FullPath);
+      }
     }
 
     private void button2_Click(object sender, EventArgs e)
